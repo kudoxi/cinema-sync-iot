@@ -1,0 +1,22 @@
+stages:
+  - build
+
+job_prod:
+  only:
+    - master
+  tags:
+    - prod
+  stage: build
+  script:
+    - docker-compose build
+    - docker-compose up --remove-orphans --no-deps -d iot
+
+job_dev:
+  only:
+    - dev
+  tags:
+    - dev
+  stage: build
+  script:
+    - docker-compose build
+    - docker-compose up --remove-orphans --no-deps -d iot redis

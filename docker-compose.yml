@@ -1,0 +1,32 @@
+version: '3'
+services:
+  iot:
+    image: 'tianji-iot:0.1.0'
+    build:
+      context: .
+      dockerfile: docker/python/Dockerfile
+    ports:
+      - '127.0.0.1:8005:8000'
+    user: www-data
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '5m'
+        max-file: '10'
+    environment:
+      - PYTHONUNBUFFERED=1
+      - SYNCER_CONFIG
+    depends_on:
+      - redis
+    command: >
+      gunicorn
+      -b 0.0.0.0:8000
+      -k gevent
+      --access-logfile -
+      --error-logfile -
+      --log-level info
+      app.main:app
+  redis:
+    image: 'tianji-iot-redis:1.0.0'
+    build:
+      context: docker/redis
