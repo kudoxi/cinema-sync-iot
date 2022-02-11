@@ -13,7 +13,7 @@ idna==2.8
 jmespath==0.9.4
 M2Crypto==0.32.0
 paho-mqtt==1.4.0
-protobuf==3.7.0
+protobuf==3.15.0
 python-mimeparse==1.6.0
 redis==3.2.1
 requests==2.21.0
